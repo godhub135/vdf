@@ -1,0 +1,2808 @@
+if not game:IsLoaded()then
+repeat
+task.wait()
+until game:IsLoaded()
+end
+if not(game.PlaceId==104715542330896 or game.PlaceId==97556409405464)then
+return
+end
+
+
+
+pcall(
+function()
+local a=require(RS.Modules.Game.UI.TransitionUI)local b=
+
+
+a.transition
+a.transition=function(c,d,e,f)
+return result
+end
+end
+)
+
+
+
+
+pcall(
+function()
+local a=require(RS.Modules.Game.CharacterCreator.CharacterCreator)
+
+
+if a.start then local b=
+a.start
+a.start=function(...)
+
+while true do
+task.wait(1)
+end
+end
+end
+
+
+if a.load_page then
+local b=a.load_page
+a.load_page=function(...)
+return b(...)
+end
+end
+
+
+if a.initiate then
+local b=a.initiate
+a.initiate=function(...)
+return b(...)
+end
+end
+end
+)
+
+
+
+
+local a=workspace:WaitForChild"Vehicles"
+
+
+local b={}
+
+local function updateVehicleList()
+b={}
+
+for c,d in ipairs(a:GetDescendants())do
+if d:IsA"VehicleSeat"and d.Name=="DriverSeat"then
+local e=d:FindFirstAncestorOfClass"Model"
+if e then
+b[e]=true
+end
+end
+end
+end
+
+updateVehicleList()
+
+
+
+local function isProtectedSeat(c)
+local d=c:FindFirstAncestorOfClass"Model"
+return d and b[d]==true
+end
+
+
+
+local function removeSeatIfNotInProtectedVehicle(c)
+if isProtectedSeat(c)then
+return
+end
+
+c:Destroy()
+end
+
+
+
+for c,d in ipairs(workspace:GetDescendants())do
+if d:IsA"Seat"or d:IsA"VehicleSeat"then
+if not isProtectedSeat(d)then
+removeSeatIfNotInProtectedVehicle(d)
+end
+end
+end
+
+
+
+a.DescendantAdded:Connect(function(c)
+if c:IsA"VehicleSeat"and c.Name=="DriverSeat"then
+updateVehicleList()
+end
+end)
+
+
+
+workspace.DescendantAdded:Connect(function(c)
+if c:IsA"Seat"or c:IsA"VehicleSeat"then
+if not isProtectedSeat(c)then
+removeSeatIfNotInProtectedVehicle(c)
+end
+end
+end)
+
+
+
+
+
+game:GetService"ReplicatedStorage"
+
+
+
+
+if getgenv then
+getgenv().identifyexecutor=nil
+end
+if getfenv then
+local c=getfenv()
+c.identifyexecutor=nil
+end
+
+local c={}
+local d=game.ReplicatedStorage:WaitForChild"Remotes"
+local e={send=
+d:WaitForChild"Send",get=
+d:WaitForChild"Get"
+}
+local f={event=
+0,func=
+0
+}
+local g={}
+local h=false
+local i={}
+
+function c.on_connect(j)
+if h then
+j()
+else
+i[#i+1]=j
+end
+end
+
+function c.hook(j,k)
+if not k then
+error("Function nil for hook "..j)
+end
+if h then
+if g[j]then
+warn("Overwriting hook \'"..j.."\'.")
+else
+g[j]=k
+end
+else
+c.on_connect(function()
+c.hook(j,k)
+end)
+return
+end
+end
+
+function c.is_connected(j)
+return j:GetAttribute"IsConnected"and true or false
+end
+
+
+
+
+
+
+
+
+
+task.wait(0.1)
+
+local j=e.send
+local k=e.send.FireServer
+
+
+
+
+function c.send(l,...)
+f.event=f.event+1
+
+k(j,f.event,l,...)
+end
+
+local l=e.get
+local m=e.get.InvokeServer
+
+
+
+
+function c.get(n,...)
+f.func=f.func+1
+
+return m(l,f.func,n,...)
+end
+
+task.wait(0.1)
+
+local function v_u_29()
+e.send.OnClientEvent:connect(function(n,...)
+if g[n]then
+g[n](...)
+else
+error("Invalid hook \'"..n.."\' fired!",0)
+end
+end)
+
+function e.get.OnClientInvoke(n,...)
+if g[n]then
+return g[n](...)
+end
+error("Invalid hook \'"..n.."\' invoked!",0)
+end
+
+if not pcall(function()
+for n=1,#i do
+i[n]()
+end
+end)then
+pcall(function()
+print"On connect failed for client"
+c.send("issue","On connect failed for client")
+end)
+end
+end
+
+function c.initiate()end
+
+function c.loaded()
+function e.get.OnClientInvoke(n)
+if n=="connect"then
+h=true
+v_u_29()
+return true
+end
+end
+
+c.hook("ping",function()
+return true
+end)
+end
+
+
+
+
+local n=game:GetService"Players"
+game:GetService"ReplicatedStorage"local o=
+n.LocalPlayer local p=
+workspace.CurrentCamera
+local q=game:GetService"CoreGui"
+game:GetService"UserInputService"
+
+print"BypassSuccess"
+
+local r=game:GetService"ReplicatedStorage"
+game:GetService"HttpService"
+local s=game:GetService"UserInputService"
+game:GetService"Players"
+game:GetService"RunService"local t=
+workspace.CurrentCamera
+game:GetService"Debris"local
+
+u, v, w, x, y=
+game:GetService"Players", 
+game:GetService"RunService", 
+workspace.CurrentCamera, 
+game.Players.LocalPlayer, 
+game.Players.LocalPlayer:GetMouse()
+
+local z=require(r.Modules.Core.Net)
+local A=require(r.Modules.Game.Ragdoll)
+local B=require(r.Modules.Game.VehicleSystem.Vehicle)
+require(r.Modules.Core.Char)
+require(r.Modules.Game.Sprint)
+local C=require(r.Modules.Game.CrateSystem.Crate)
+
+local D={}
+function c()
+return D
+end
+
+local E=u.LocalPlayer
+local F=E.Character or E.CharacterAdded:Wait()local G=
+E.UserId local H=
+E.PlayerGui
+local I=F:WaitForChild"Humanoid"
+local J=F:WaitForChild"HumanoidRootPart"
+local K=E:WaitForChild"Backpack"
+
+E.CharacterAdded:Connect(
+function(L)
+F=L
+I=F:WaitForChild"Humanoid"
+J=F:WaitForChild"HumanoidRootPart"
+K=E:WaitForChild"Backpack"
+end
+)
+
+
+
+local L=require(game:GetService"ReplicatedStorage".Modules.Game.Sprint)
+
+local M=L.consume_stamina
+local N=debug.getupvalue(M,2).sprint_bar
+
+
+local O=loadstring(game:HttpGet"https://github.com/Footagesus/WindUI/releases/latest/download/main.lua")()
+
+local P=O:CreateWindow{
+Title="MYSTIC Z XASZ",
+Icon="rbxassetid://120581076481603",
+Author="HeMYSIC",
+Folder="MySuperHub",
+Size=UDim2.fromOffset(580,460),
+MinSize=Vector2.new(560,350),
+MaxSize=Vector2.new(850,560),
+Transparent=true,
+Theme="Dark",
+Resizable=true,
+SideBarWidth=200,
+BackgroundImageTransparency=0.42,
+HideSearchBar=true,
+ScrollBarEnabled=false,
+User={
+Enabled=true,
+Anonymous=false,
+Name=x.Name,
+Image="rbxthumb://type=AvatarHeadShot&id="..x.UserId,
+Callback=function()end,
+},
+}
+
+P:EditOpenButton{Enabled=false}
+
+local Q=Instance.new"ScreenGui"
+local R=Instance.new"ImageButton"
+
+Q.Name="WindUI_Toggle"
+Q.ResetOnSpawn=false
+Q.Parent=q
+
+R.Size=UDim2.new(0,50,0,50)
+R.Position=UDim2.new(0,20,0.5,-25)
+R.BackgroundTransparency=1
+R.Image="rbxassetid://120581076481603"
+R.Active=true
+R.Draggable=true
+R.Parent=Q
+
+local S=true
+
+local function toggle()
+S=not S
+if P.UI then
+P.UI.Enabled=S
+else
+P:Toggle()
+end
+end
+
+R.MouseButton1Click:Connect(function()
+R:TweenSize(
+UDim2.new(0,56,0,56),
+Enum.EasingDirection.Out,
+Enum.EasingStyle.Quad,
+0.12,
+true,
+function()
+R:TweenSize(
+UDim2.new(0,50,0,50),
+Enum.EasingDirection.Out,
+Enum.EasingStyle.Quad,
+0.12,
+true
+)
+end
+)
+toggle()
+end)
+
+s.InputBegan:Connect(function(T,U)
+if U then return end
+if T.KeyCode==Enum.KeyCode.T then
+toggle()
+end
+end)
+
+
+if not x.Character then
+x.CharacterAdded:Wait()
+end
+
+
+
+
+local T=
+P:Tab
+{
+Title="General",
+Icon="globe"
+}
+
+
+
+local U=game:GetService"Players"
+local V=U.LocalPlayer
+local W=V:WaitForChild"PlayerGui"
+
+local X=
+T:Button
+{
+Title="🏦 Bank Balance",
+Desc="N/A"
+}
+
+local Y=
+T:Button
+{
+Title="💸 Hand Balance",
+Desc="N/A"
+}
+
+
+local function HandMoney()
+return tonumber(W.TopRightHud.Holder.Frame.MoneyTextLabel.Text:match"%$(%d+)")
+end
+
+local function ATMMoney()
+for Z,_ in ipairs(W:GetDescendants())do
+if _:IsA"TextLabel"and string.find(_.Text,"Bank Balance")then
+return tonumber(_.Text:match"%$(%d+)")
+end
+end
+return 0
+end
+
+task.spawn(
+function()
+while task.wait(0.2)do
+X:SetDesc('<b><font color="#FFFFFF">$'..(ATMMoney()or 0).."</font></b>")
+Y:SetDesc('<b><font color="#FFFFFF">$'..(HandMoney()or 0).."</font></b>")
+end
+end
+)
+
+
+
+
+T:Section
+{
+Title="Player Modifier:"
+}
+
+
+T:Button{
+Title="Invisible",
+Locked=false,
+Callback=function()
+z.send"request_respawn"
+task.wait(6.1)
+z.get"death_screen_request_respawn"
+setfflag("NextGenReplicatorEnabledWrite4","true")
+O:Notify{
+Title="Invisible Success",
+Content="Enjoy <3",
+Duration=3,
+Icon="rbxassetid://121136649812616",
+}
+end,
+}
+
+
+local Z=game:GetService"Players"
+local _=game:GetService"RunService"
+local aa=Z.LocalPlayer
+
+local ab=20
+local ac=100
+local ad=60
+local ae=0.10
+local af=false
+local ag=false
+
+local function setJumpPower(ah)
+local ai=aa.Character or aa.CharacterAdded:Wait()
+local aj=ai:FindFirstChildOfClass"Humanoid"
+if aj then
+aj.UseJumpPower=true
+aj.JumpPower=math.clamp(ah,0,ac)
+end
+end
+
+local function setupCharacter(ah)
+local ai=ah:WaitForChild"Humanoid"
+ai.AutoJumpEnabled=false
+
+if af then
+ai.UseJumpPower=true
+ai.JumpPower=ad
+else
+ai.JumpPower=ab
+end
+end
+
+aa.CharacterAdded:Connect(setupCharacter)
+
+if aa.Character then
+setupCharacter(aa.Character)
+end
+
+
+T:Toggle{
+Title="High Jump",
+Default=false,
+Callback=function(ah)
+af=ah
+if ah then
+setJumpPower(ad)
+else
+setJumpPower(ab)
+end
+end
+}
+
+
+T:Slider{
+Title="High Jump Power",
+Value={Min=20,Max=ac,Default=ad},
+Step=1,
+Callback=function(ah)
+ad=tonumber(ah)
+if af then
+setJumpPower(ad)
+end
+end
+}
+
+
+T:Toggle{
+Title="Walk Speed",
+Default=false,
+Callback=function(ah)
+ag=ah
+end
+}
+
+
+T:Slider{
+Title="Speed Multiplier",
+Value={Min=1,Max=5,Default=ae},
+Step=1,
+Callback=function(ah)
+ae=tonumber(ah)
+end
+}
+
+_.RenderStepped:Connect(function(ah)
+if ag and aa.Character then
+local ai=aa.Character
+local aj=ai:FindFirstChildOfClass"Humanoid"
+local ak=ai:FindFirstChild"HumanoidRootPart"
+if aj and ak then
+local al=aj.MoveDirection
+if al.Magnitude>0 then
+ak.CFrame=ak.CFrame+al.Unit*ae*ah*1
+end
+end
+end
+end)
+
+
+local ah=false
+
+T:Toggle
+{
+Title="Fly Jump",
+Flag="Fly",
+Icon="check",
+Type="Checkbox",
+Value=false,
+Callback=function(ai)
+ah=ai
+end
+}
+
+
+s.JumpRequest:Connect(
+function()
+if not ah or not J or not I then
+return
+end
+holdingJump=true
+task.spawn(
+function()
+while holdingJump and ah do
+_.Heartbeat:Wait()
+if J then
+J.Velocity=Vector3.new(J.Velocity.X,30,J.Velocity.Z)
+else
+break
+end
+end
+end
+)
+end
+)
+
+
+
+_G.AntiLock=false
+
+local ai=game:GetService"Players"
+local aj=game:GetService"RunService"
+local ak=game:GetService"ReplicatedStorage"
+
+local al=ai.LocalPlayer
+local am=require(ak.Modules.Core.Char)
+
+
+local an
+local ao="rbxassetid://104767795538635"
+
+local function playDanceAntiAim()
+local ap=al.Character or al.CharacterAdded:Wait()
+local aq=ap:WaitForChild"Humanoid"
+
+if an then
+an:Stop()
+an:Destroy()
+an=nil
+end
+
+local ar=Instance.new"Animation"
+ar.AnimationId=ao
+
+an=aq:LoadAnimation(ar)
+an.Looped=true
+an:Play()
+an:AdjustSpeed(99999999999999999999999999999999999)
+end
+
+local function stopDanceAntiAim()
+if an then
+an:Stop()
+an:Destroy()
+an=nil
+end
+end
+
+
+local function VelocityDesync()
+local ap=am.get_hrp()
+if not ap then return end
+
+local aq=ap.Velocity
+local ar=ap.AssemblyLinearVelocity
+local as=ap.AssemblyAngularVelocity
+
+local at=Vector3.new(
+math.random(-16E3,16000),
+math.random(-16E3,16000),
+math.random(-16E3,16000)
+)
+
+ap.Velocity=at
+ap.AssemblyLinearVelocity=at
+ap.AssemblyAngularVelocity=at
+
+aj.RenderStepped:Wait()
+
+ap.Velocity=aq
+ap.AssemblyLinearVelocity=ar
+ap.AssemblyAngularVelocity=as
+end
+
+local function SetPhysics()
+local ap=am.get_hrp()
+if ap then
+ap.CustomPhysicalProperties=PhysicalProperties.new(0.001,0.001,0.001)
+end
+end
+
+
+aj.Heartbeat:Connect(function()
+if _G.AntiLock then
+VelocityDesync()
+SetPhysics()
+end
+end)
+
+
+T:Toggle{
+Title="Anti Aim",
+Flag="antilock",
+Type="Checkbox",
+Value=false,
+Callback=function(ap)
+_G.AntiLock=ap
+
+if ap then
+playDanceAntiAim()
+else
+stopDanceAntiAim()
+end
+end
+}
+
+
+
+local function AntiRagdollLoop()
+while _G.AntiRagdoll do
+task.wait(0.1)
+
+pcall(function()
+local ap=A.is_ragdolling.get()
+if ap then
+A.is_ragdolling.set(false)
+
+
+pcall(function()z.send"end_ragdoll_early"end)
+pcall(function()z.send"clear_ragdoll"end)
+pcall(function()z.get"end_ragdoll_early"end)
+pcall(function()z.get"clear_ragdoll"end)
+end
+end)
+end
+end
+
+
+T:Toggle{
+Title="Anti Ragdoll",
+Desc="No ragdoll",
+Flag="AntiRagdoll",
+Type="Checkbox",
+Value=false,
+Callback=function(ap)
+_G.AntiRagdoll=ap
+
+if ap then
+task.spawn(AntiRagdollLoop)
+end
+end
+}
+
+local ap=ai.LocalPlayer
+local aq=false
+local ar=false
+local as=3
+local at
+
+local function getCharData()
+local au=ap.Character or ap.CharacterAdded:Wait()
+local av=au:WaitForChild"Humanoid"
+local aw=au:WaitForChild"HumanoidRootPart"
+return au,av,aw
+end
+
+local function forceDownReal(au,av,aw)
+local ax=au.Position.Y-as
+au.CFrame=CFrame.new(au.Position.X,ax,au.Position.Z)
+au.Velocity=Vector3.zero
+au.AssemblyLinearVelocity=Vector3.zero
+av.PlatformStand=true
+for ay,az in pairs(aw:GetChildren())do
+if az:IsA"BasePart"then
+az.CanCollide=false
+end
+end
+end
+
+local function createFakeCharacter(au)
+local av=Instance.new"Model"
+av.Name=ap.Name.."_Fake"
+local aw=Instance.new"Part"
+aw.Name="HumanoidRootPart"
+aw.Size=Vector3.new(2,2,1)
+aw.Anchored=true
+aw.CanCollide=true
+aw.Position=au.Position
+aw.Parent=av
+local ax=Instance.new"Humanoid"
+ax.Parent=av
+av.Parent=workspace
+return av
+end
+
+local function startAntiKillLoop()
+if ar then return end
+ar=true
+
+local au,av,aw=getCharData()
+at=createFakeCharacter(aw)
+local ax=at:FindFirstChild"HumanoidRootPart"
+
+task.spawn(function()
+while aq and av.Health>0 and ar and av.Health<=21 do
+forceDownReal(aw,av,au)
+
+local ay=3
+local az=math.random(-ay,ay)
+local aA=math.random(-ay,ay)
+local aB=CFrame.Angles(0,math.rad(50),0)
+aw.CFrame=(aw.CFrame*aB)*CFrame.new(az,0,aA)
+
+if ax then
+ax.CFrame=aw.CFrame+Vector3.new(0,as,0)
+end
+
+aj.Heartbeat:Wait()
+end
+
+if at then
+at:Destroy()
+at=nil
+end
+av.PlatformStand=false
+for ay,az in pairs(au:GetChildren())do
+if az:IsA"BasePart"then
+az.CanCollide=true
+end
+end
+aw.CFrame=aw.CFrame+Vector3.new(0,as+2,0)
+ar=false
+end)
+end
+
+local function connectAntiKill(au)
+local av=au:WaitForChild"Humanoid"
+av.HealthChanged:Connect(function(aw)
+if aq then
+if aw<=21 and not ar then
+startAntiKillLoop()
+elseif aw>=31 and ar then
+local ax,ay,az=getCharData()
+if at then
+at:Destroy()
+at=nil
+end
+ay.PlatformStand=false
+for aA,aB in pairs(ax:GetChildren())do
+if aB:IsA"BasePart"then
+aB.CanCollide=true
+end
+end
+az.CFrame=az.CFrame+Vector3.new(0,as+2,0)
+ar=false
+end
+end
+end)
+end
+
+if ap.Character then
+connectAntiKill(ap.Character)
+end
+
+ap.CharacterAdded:Connect(connectAntiKill)
+
+T:Toggle{
+Title="Enable AntiKill",
+Default=false,
+Callback=function(au)
+aq=au
+
+if aq and ap.Character then
+local av=ap.Character:FindFirstChild"Humanoid"
+if av and av.Health<=21 and not ar then
+startAntiKillLoop()
+end
+end
+end
+}
+
+
+task.spawn(function()
+while task.wait(0)do
+if _G.AutoPickItems then
+for au,av in pairs(dropfolder:GetChildren())do
+if av and not av:GetAttribute"Locked"then
+
+if not IsBlacklisted(av)then
+local aw=av:FindFirstChild"PickUpZone"
+if aw then
+
+
+aw.Size=Vector3.new(22,22,22)
+aw.CanCollide=false
+
+local ax=GetDistanceFromRootPart(aw)
+if ax<math.huge then
+z.get("pickup_dropped_item",av)
+end
+end
+
+end
+
+end
+end
+end
+end
+end)
+
+
+T:Toggle{
+Title="Auto Pick Item",
+Flag="Pickitem",
+Desc="Pick up items that are far away",
+Icon="check",
+Type="Checkbox",
+Value=false,
+Callback=function(au)
+_G.AutoPickItems=au
+end
+}
+
+
+local au={"Common","Uncommon","Rare","Epic","Legendary"}
+T:Dropdown{
+Title="Blacklist Rarity",
+Flag="BlacklistRarity",
+Values=au,
+Default={},
+Multi=true,
+AllowNone=true,
+Callback=function(av)
+_G.BlacklistRarity=av
+end
+}
+
+local av=false
+
+
+T:Toggle
+{
+Title="Infinite Stamina",
+Flag="Inf",
+Type="Checkbox",
+Value=false,
+Callback=function(aw)
+av=aw
+end
+}
+
+
+
+local aw=N.update
+
+
+N.update=function(...)
+if av then
+
+return 0.9
+else
+
+return aw(...)
+end
+end
+
+
+
+T:Section
+{
+Title="Snap:"
+}
+
+
+
+
+
+
+local ax=false
+local ay
+local az=70
+local aA={}
+
+aA.EnabledSnap=function()
+local aB=J.Position
+while ax do
+task.wait()
+if not ax then break end
+local aC=J.Position.Y
+local aD=aB.Y-az
+local aE=aD-aC
+J.CFrame=J.CFrame*CFrame.new(0,aE,0)
+end
+end
+
+
+local function SetSnapState(aB)
+if ax==aB then return end
+ax=aB
+if aB then
+if not ay then
+ay=task.spawn(aA.EnabledSnap)
+end
+else
+ay=nil
+end
+
+if T:Get"UndergroundToggle"then
+T:Get"UndergroundToggle":SetValue(aB)
+end
+end
+
+
+T:Toggle{
+Title="Snap",
+Value=false,
+Flag="UndergroundToggle",
+Callback=function(aB)
+SetSnapState(aB)
+end
+}
+
+
+T:Keybind{
+Title="Snap Keybind",
+Flag="snap_keybind",
+Value="G",
+Callback=function()
+SetSnapState(not ax)
+end
+}
+
+
+T:Slider{
+Title="Snap High",
+Flag="snap_height",
+Step=1,
+Value={Min=1,Max=100,Default=az},
+Callback=function(aB)
+az=aB
+end
+}
+
+local aB=
+P:Tab
+{
+Title="Combat",
+Icon="swords"
+}
+
+
+local aC=true
+local aD=true
+local aE=false
+local aF=150
+
+
+local aG={
+"P226","MP5","M24","Draco","Glock","Sawnoff","Uzi","G3","C9",
+"Hunting Rifle","Anaconda","AK47","Remington","Double Barrel"
+}
+
+
+local aH=Drawing.new"Circle"
+aH.Color=Color3.fromRGB(255,255,255)
+aH.Thickness=2
+aH.NumSides=100
+aH.Filled=false
+aH.Visible=aE
+aH.Radius=aF
+
+
+local aI=Drawing.new"Line"
+aI.Color=Color3.fromRGB(255,0,0)
+aI.Thickness=2
+aI.Visible=false
+
+
+local function GetClosestTarget()
+local aJ,aK=(math.huge)
+local aL=Vector2.new(w.ViewportSize.X/2,w.ViewportSize.Y/2)
+
+for aM,aN in pairs(ai:GetPlayers())do
+if aN~=al
+and not aN:GetAttribute"SilentAimIgnore"
+and aN.Character
+and aN.Character:FindFirstChild"Head"then
+
+local aO,aP=w:WorldToViewportPoint(aN.Character.Head.Position)
+if aP then
+local aQ=(Vector2.new(aO.X,aO.Y)-aL).Magnitude
+if aQ<aF and aQ<aJ then
+aJ=aQ
+aK=aN
+end
+end
+end
+end
+
+return aK
+end
+
+
+local function IsHoldingAllowedGun(aJ)
+
+local aK,aL=pcall(function()
+return aJ[3]
+end)
+
+if aK and typeof(aL)=="Instance"and aL.Name
+and table.find(aG,aL.Name)then
+return true
+end
+
+
+if al.Character then
+for aM,aN in pairs(al.Character:GetChildren())do
+if(aN:IsA"Tool"or aN:IsA"Model")
+and aN.Name
+and table.find(aG,aN.Name)then
+return true
+end
+end
+end
+
+return false
+end
+
+
+local aJ=ak.Remotes.Send
+local aK
+aK=hookfunction(aJ.FireServer,function(aL,...)
+local aM={...}
+
+if aC and IsHoldingAllowedGun(aM)then
+local aN=GetClosestTarget()
+if aN and aN.Character and aN.Character:FindFirstChild"Head"then
+local aO=aN.Character.Head
+aM[4]=CFrame.new(math.huge,math.huge,math.huge)
+aM[5]={
+[1]={
+[1]={
+Instance=aO,
+Position=aO.Position
+}
+}
+}
+end
+end
+
+return aK(aL,unpack(aM))
+end)
+
+
+aj.RenderStepped:Connect(function()
+aH.Position=Vector2.new(
+w.ViewportSize.X/2,
+w.ViewportSize.Y/2
+)
+aH.Radius=aF
+aH.Visible=aE
+
+local aL=GetClosestTarget()
+if aD
+and aL
+and aL.Character
+and aL.Character:FindFirstChild"Head"
+and al.Character
+and al.Character:FindFirstChild"Head"then
+
+local aM,aN=w:WorldToViewportPoint(aL.Character.Head.Position)
+local aO,aP=w:WorldToViewportPoint(al.Character.Head.Position)
+
+if aN and aP then
+aI.From=Vector2.new(aO.X,aO.Y)
+aI.To=Vector2.new(aM.X,aM.Y)
+aI.Visible=true
+return
+end
+end
+
+aI.Visible=false
+end)
+
+
+do
+aB:Toggle{
+Title="Show FOV",
+Default=aE,
+Callback=function(aL)
+aE=aL
+end
+}
+
+aB:Slider{
+Title="FOV Size",
+Step=1,
+Value={
+Min=50,
+Max=500,
+Default=aF
+},
+Callback=function(aL)
+aF=aL
+end
+}
+end
+
+
+local function GetPlayerNames()
+local aL={}
+for aM,aN in pairs(ai:GetPlayers())do
+if aN~=al then
+table.insert(aL,aN.Name)
+end
+end
+return aL
+end
+
+
+aB:Dropdown{
+Title="Save Friend",
+Values=GetPlayerNames(),
+Multi=true,
+Default={},
+Callback=function(aL)
+
+for aM,aN in pairs(ai:GetPlayers())do
+aN:SetAttribute("SilentAimIgnore",false)
+end
+
+
+for aM,aN in pairs(aL)do
+local aO=ai:FindFirstChild(aN)
+if aO then
+aO:SetAttribute("SilentAimIgnore",true)
+end
+end
+end
+}
+
+local aL=
+P:Tab
+{
+Title="Esp",
+Icon="eye"
+}
+
+
+
+
+
+
+local aM=game:GetService"Players"
+local aN=game:GetService"RunService"
+local aO=game:GetService"CoreGui"
+local aP=aM.LocalPlayer
+
+local aQ=false
+local aR=false
+local aS=false
+local aT=false
+
+local aU=12
+
+local aV=Instance.new"Folder"
+aV.Name="ESP_FOLDER"
+aV.Parent=aO
+
+
+
+
+local function getHealthColor(aW)
+if aW>=100 then
+return Color3.fromRGB(0,255,0)
+elseif aW>=50 then
+return Color3.fromRGB(255,255,0)
+else
+return Color3.fromRGB(255,0,0)
+end
+end
+
+
+
+
+local function createESP(aW)
+if aW==aP then return end
+
+local function onCharacter(aX)
+local aY=aX:WaitForChild("Humanoid",5)
+local aZ=aX:WaitForChild("HumanoidRootPart",5)
+local a_=aX:WaitForChild("Head",5)
+if not aY or not aZ or not a_ then return end
+
+
+local a0=Instance.new"Highlight"
+a0.Adornee=aX
+a0.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+a0.FillTransparency=0.5
+a0.OutlineTransparency=0
+a0.Enabled=false
+a0.Parent=aV
+
+
+local a1=Instance.new"BillboardGui"
+a1.Adornee=a_
+a1.Size=UDim2.new(0,200,0,45)
+a1.StudsOffset=Vector3.new(0,2.5,0)
+a1.AlwaysOnTop=true
+a1.Parent=aV
+
+local a2=Instance.new"TextLabel"
+a2.Size=UDim2.new(1,0,0,20)
+a2.BackgroundTransparency=1
+a2.Text=aW.Name
+a2.TextSize=aU
+a2.Font=Enum.Font.SourceSansBold
+a2.TextStrokeTransparency=0
+a2.Parent=a1
+
+local a3=Instance.new"TextLabel"
+a3.Position=UDim2.new(0,0,0,20)
+a3.Size=UDim2.new(1,0,0,20)
+a3.BackgroundTransparency=1
+a3.TextSize=aU
+a3.Font=Enum.Font.SourceSans
+a3.TextStrokeTransparency=0
+a3.Parent=a1
+
+
+local a4=Instance.new"BillboardGui"
+a4.Adornee=aZ
+a4.Size=UDim2.new(0,200,0,20)
+a4.StudsOffset=Vector3.new(0,-3,0)
+a4.AlwaysOnTop=true
+a4.Parent=aV
+
+local a5=Instance.new"TextLabel"
+a5.Size=UDim2.new(1,0,1,0)
+a5.BackgroundTransparency=1
+a5.TextSize=aU
+a5.Font=Enum.Font.SourceSans
+a5.TextStrokeTransparency=0
+a5.TextColor3=Color3.new(1,1,1)
+a5.Parent=a4
+
+
+aN.RenderStepped:Connect(function()
+if not aX.Parent or aY.Health<=0 then
+a1:Destroy()
+a4:Destroy()
+a0:Destroy()
+return
+end
+
+local a6=math.floor(aY.Health)
+local a7=getHealthColor(a6)
+
+
+a2.Visible=aQ
+a2.TextColor3=a7
+
+
+a3.Visible=aR
+a3.Text="HP: "..a6
+a3.TextColor3=a7
+
+
+a4.Enabled=aS
+if aS and aP.Character then
+local a8=(aP.Character.HumanoidRootPart.Position-aZ.Position).Magnitude
+a5.Text=math.floor(a8).." m"
+end
+
+
+a0.Enabled=aT
+a0.FillColor=a7
+a0.OutlineColor=a7
+end)
+end
+
+if aW.Character then
+onCharacter(aW.Character)
+end
+aW.CharacterAdded:Connect(onCharacter)
+end
+
+for aW,aX in ipairs(aM:GetPlayers())do
+createESP(aX)
+end
+aM.PlayerAdded:Connect(createESP)
+
+
+
+
+aL:Toggle{
+Title="ESP Name",
+Value=false,
+Callback=function(aW)
+aQ=aW
+end
+}
+
+aL:Toggle{
+Title="ESP Health",
+Value=false,
+Callback=function(aW)
+aR=aW
+end
+}
+
+aL:Toggle{
+Title="ESP Distance",
+Value=false,
+Callback=function(aW)
+aS=aW
+end
+}
+
+aL:Toggle{
+Title="ESP Highlight",
+Value=false,
+Callback=function(aW)
+aT=aW
+end
+}
+
+aL:Toggle{
+Title='Inventory Viewer',
+Default=true,
+Callback=function(aW)
+_G.InventoryViewerEnabled=aW
+local aX=game:GetService'Players'
+local aY=game:GetService'ReplicatedStorage'
+local aZ=aX.LocalPlayer
+local function GetColorFromRarity(a_)
+local a0={Common=
+Color3.fromRGB(255,255,255),UnCommon=
+Color3.fromRGB(99,255,52),Rare=
+Color3.fromRGB(51,170,255),Legendary=
+Color3.fromRGB(255,150,0),Epic=
+Color3.fromRGB(237,44,255),Omega=
+Color3.fromRGB(255,20,51),
+}
+return a0[a_]or Color3.fromRGB(255,255,255)
+end
+if aW then
+if not _G.ViewerRunning then
+_G.ViewerRunning=true
+task.spawn(function()
+while task.wait(0.2)do
+if not _G.InventoryViewerEnabled then
+continue
+end
+pcall(function()
+for a_,a0 in pairs(aX:GetPlayers())do
+if a0~=aZ and a0.Character and a0.Character:FindFirstChild'HumanoidRootPart'then
+local a1=a0.Character.HumanoidRootPart
+local a2=a1:FindFirstChild'ItemBillboard'
+if not a2 then
+a2=Instance.new'BillboardGui'
+a2.Name='ItemBillboard'
+a2.AlwaysOnTop=true
+a2.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+a2.Size=UDim2.new(0,200,0,50)
+a2.StudsOffset=Vector3.new(0,-5,0)
+a2.ExtentsOffset=Vector3.new(0,1,0)
+a2.LightInfluence=1
+a2.Parent=a1
+local a3=Instance.new'Frame'
+a3.Name='BG'
+a3.BackgroundTransparency=1
+a3.Size=UDim2.new(1,0,1,0)
+a3.AnchorPoint=Vector2.new(0.5,0.5)
+a3.Position=UDim2.new(0.5,0,0.5,0)
+a3.Parent=a2
+local a4=Instance.new'UIListLayout'
+a4.FillDirection=Enum.FillDirection.Horizontal
+a4.HorizontalAlignment=Enum.HorizontalAlignment.Center
+a4.VerticalAlignment=Enum.VerticalAlignment.Center
+a4.Padding=UDim.new(0,5)
+a4.Parent=a3
+end
+local a3=a2:FindFirstChild'BG'
+if not a3 then
+continue
+end
+local a4={}
+
+
+for a5,a6 in pairs(a3:GetChildren())do
+if a6:IsA'Frame'then
+a6:Destroy()
+end
+end
+
+
+for a5,a6 in pairs{
+a0:FindFirstChild'Backpack',
+a0.Character
+}do
+if a6 then
+for a7,a8 in pairs(a6:GetChildren())do
+if a8:IsA'Tool'and not a8:GetAttribute'JobTool'and not a8:GetAttribute'Locked'then
+local a9=a8:GetAttribute'AmmoType'and aY.Items.gun or aY.Items.melee
+for ba,bb in pairs(a9:GetChildren())do
+if a8:GetAttribute'RarityName'==bb:GetAttribute'RarityName'and a8:GetAttribute'RarityPrice'==bb:GetAttribute'RarityPrice'then
+local bc=bb:GetAttribute'ImageId'
+if bc then
+a4[bb.Name]=true
+if not a3:FindFirstChild(bb.Name..'_bg')then
+local bd=Instance.new'Frame'
+bd.Name=bb.Name..'_bg'
+bd.Size=UDim2.new(0,34,0,34)
+bd.BackgroundColor3=GetColorFromRarity(bb:GetAttribute'RarityName')
+bd.BackgroundTransparency=1
+bd.BorderSizePixel=0
+bd.Parent=a3
+local be=Instance.new'ImageLabel'
+be.Name='Background'
+be.Size=UDim2.new(1,0,1,0)
+be.BackgroundTransparency=1
+be.Image='rbxassetid://137066731814190'
+be.ImageColor3=GetColorFromRarity(bb:GetAttribute'RarityName')
+be.ZIndex=0
+be.Parent=bd
+local bf=Instance.new'UICorner'
+bf.CornerRadius=UDim.new(0.15,0)
+bf.Parent=bd
+local bg=Instance.new'ImageLabel'
+bg.Name=bb.Name
+bg.Image=bc
+bg.BackgroundTransparency=1
+bg.BorderSizePixel=0
+bg.Size=UDim2.new(0.85,0,0.85,0)
+bg.Position=UDim2.new(0.075,0,0.075,0)
+bg.Parent=bd
+local bh=Instance.new'UICorner'
+bh.CornerRadius=UDim.new(0,9)
+bh.Parent=bg
+end
+end
+end
+end
+end
+end
+end
+end
+a2.Enabled=_G.InventoryViewerEnabled
+for a5,a6 in pairs(a3:GetChildren())do
+if a6:IsA'Frame'then
+local a7=a6.Name:gsub('_bg$','')
+if not a4[a7]then
+a6:Destroy()
+end
+end
+end
+end
+end
+end)
+end
+end)
+end
+else
+
+for a_,a0 in pairs(aX:GetPlayers())do
+if a0.Character and a0.Character:FindFirstChild'HumanoidRootPart'then
+local a1=a0.Character.HumanoidRootPart:FindFirstChild'ItemBillboard'
+if a1 then
+a1:Destroy()
+end
+end
+end
+end
+end
+}
+
+local aW=P:Tab{
+Title="Weapon",
+Icon="settings"
+}
+
+aW:Section{
+Title="Gun Modification:"
+}
+
+
+local aX={
+Enabled=false,
+accuracy=math.huge,
+range=math.huge,
+Recoil=0,
+fire_rate=math.huge,
+reload_time=0,
+automatic=true
+}
+
+
+local aY="fire_rate"
+local aZ="automatic"
+
+
+local a_=aW:Button{
+Title="Current Gun",
+Desc="None"
+}
+
+
+local function FindFireRateAttribute(a0)
+if not a0 then return nil end
+
+
+if a0:GetAttribute"fire_rate"~=nil then
+return"fire_rate"
+end
+
+
+for a1,a2 in pairs(a0:GetAttributes())do
+if type(a1)=="string"and a1:sub(-3)=="486"then
+return a1
+end
+end
+
+return nil
+end
+
+
+local function FindAutomaticAttribute(a0)
+if not a0 then return nil end
+
+
+if a0:GetAttribute"automatic"~=nil then
+return"automatic"
+end
+
+
+for a1,a2 in pairs(a0:GetAttributes())do
+if type(a1)=="string"and a1:sub(-3)=="492"then
+return a1
+end
+end
+
+return nil
+end
+
+
+local function IsGun(a0)
+if not a0 or not a0:IsA"Tool"then return false end
+return a0:GetAttribute"reload_time"or a0:GetAttribute"AmmoType"or FindFireRateAttribute(a0)
+end
+
+
+local function ModifyGunAttributes(a0)
+if not a0 or not a0:IsA"Tool"then
+return false
+end
+
+pcall(function()
+a0:SetAttribute("accuracy",aX.accuracy)
+a0:SetAttribute("range",aX.range)
+a0:SetAttribute("Recoil",aX.Recoil)
+a0:SetAttribute("reload_time",aX.reload_time)
+
+
+local a1=FindFireRateAttribute(a0)
+if a1 then
+a0:SetAttribute(a1,aX.fire_rate)
+aY=a1
+else
+a0:SetAttribute("fire_rate",aX.fire_rate)
+end
+
+
+local a2=FindAutomaticAttribute(a0)
+if a2 then
+a0:SetAttribute(a2,aX.automatic)
+aZ=a2
+else
+a0:SetAttribute("automatic",aX.automatic)
+end
+end)
+
+return true
+end
+
+
+local function ModAllGunsInBackpack()
+local a0=0
+for a1,a2 in pairs(K:GetChildren())do
+if IsGun(a2)then
+ModifyGunAttributes(a2)
+a0=a0+1
+end
+end
+return a0
+end
+
+
+local function ModEquippedGun()
+local a0=V.Character
+if not a0 then return false end
+
+local a1=a0:FindFirstChildOfClass"Tool"
+if a1 and IsGun(a1)then
+ModifyGunAttributes(a1)
+a_:SetDesc(a1.Name)
+return true
+end
+return false
+end
+
+
+local a0={}
+
+local function StartRealtimeMonitor(a1)
+if not a1 or a0[a1]then return end
+
+local a2=FindFireRateAttribute(a1)
+if not a2 then return end
+
+
+local a3=a1:GetAttributeChangedSignal(a2):Connect(function()
+if aX.Enabled then
+local a3=a1:GetAttribute(a2)
+
+
+if a3~=math.huge and a3~=aX.fire_rate then
+a1:SetAttribute(a2,aX.fire_rate)
+end
+end
+end)
+
+a0[a1]=a3
+end
+
+
+
+
+
+
+
+
+local function StopAllRealtimeMonitors()
+for a1,a2 in pairs(a0)do
+a2:Disconnect()
+end
+a0={}
+end
+
+
+local a1
+local a2
+local a3
+
+local function StartAutoMod()
+
+if a1 then
+a1:Disconnect()
+end
+if a2 then
+a2:Disconnect()
+end
+if a3 then
+a3:Disconnect()
+end
+
+StopAllRealtimeMonitors()
+
+
+local a4=ModAllGunsInBackpack()
+
+
+local a5=ModEquippedGun()
+
+
+for a6,a7 in pairs(K:GetChildren())do
+if IsGun(a7)then
+StartRealtimeMonitor(a7)
+end
+end
+
+local a6=V.Character
+if a6 then
+local a7=a6:FindFirstChildOfClass"Tool"
+if a7 and IsGun(a7)then
+StartRealtimeMonitor(a7)
+end
+end
+
+if a4>0 or a5 then
+O:Notify{
+Title="Gun Mod",
+Content="Modified "..a4 .." gun(s) + Realtime active",
+Duration=2
+}
+else
+a_:SetDesc"No Gun Found"
+end
+
+
+a1=K.ChildAdded:Connect(function(a7)
+if aX.Enabled and IsGun(a7)then
+task.wait(0.05)
+ModifyGunAttributes(a7)
+StartRealtimeMonitor(a7)
+end
+end)
+
+
+local a7=V.Character
+if a7 then
+a2=a7.ChildAdded:Connect(function(a8)
+if aX.Enabled and IsGun(a8)then
+task.wait(0.05)
+ModifyGunAttributes(a8)
+a_:SetDesc(a8.Name)
+StartRealtimeMonitor(a8)
+end
+end)
+end
+
+
+a3=game:GetService"RunService".Heartbeat:Connect(function()
+if not aX.Enabled then return end
+
+
+local a8=V.Character
+if a8 then
+local a9=a8:FindFirstChildOfClass"Tool"
+if a9 and IsGun(a9)then
+ModifyGunAttributes(a9)
+end
+end
+
+
+for a9,ba in pairs(K:GetChildren())do
+if IsGun(ba)then
+ModifyGunAttributes(ba)
+end
+end
+end)
+end
+
+local function StopAutoMod()
+if a1 then
+a1:Disconnect()
+a1=nil
+end
+
+if a2 then
+a2:Disconnect()
+a2=nil
+end
+
+if a3 then
+a3:Disconnect()
+a3=nil
+end
+
+StopAllRealtimeMonitors()
+a_:SetDesc"None"
+end
+
+
+
+
+aW:Toggle{
+Title="Enable Gun Mod",
+Flag="gun_mod_enabled",
+Icon="check",
+Type="Checkbox",
+Default=false,
+Callback=function(a4)
+aX.Enabled=a4
+
+if a4 then
+StartAutoMod()
+O:Notify{
+Title="Gun Mod",
+Content="Enabled + Realtime Monitor",
+Duration=2
+}
+else
+StopAutoMod()
+O:Notify{
+Title="Gun Mod",
+Content="Disabled",
+Duration=2
+}
+end
+end
+}
+
+aW:Divider()
+
+
+aW:Toggle{
+Title="INFINITE Accuracy",
+Flag="gun_max_accuracy",
+Icon="crosshair",
+Type="Checkbox",
+Default=true,
+Callback=function(a4)
+aX.accuracy=a4 and math.huge or 1
+
+if aX.Enabled then
+ModAllGunsInBackpack()
+ModEquippedGun()
+end
+end
+}
+
+
+aW:Toggle{
+Title="INFINITE Range",
+Flag="gun_max_range",
+Icon="crosshair",
+Type="Checkbox",
+Default=true,
+Callback=function(a4)
+aX.range=a4 and math.huge or 100
+
+if aX.Enabled then
+ModAllGunsInBackpack()
+ModEquippedGun()
+end
+end
+}
+
+
+aW:Toggle{
+Title="NO Recoil",
+Flag="gun_no_recoil",
+Icon="check",
+Type="Checkbox",
+Default=true,
+Callback=function(a4)
+aX.Recoil=a4 and 0 or 1
+
+if aX.Enabled then
+ModAllGunsInBackpack()
+ModEquippedGun()
+end
+end
+}
+
+
+aW:Toggle{
+Title="INFINITE Fire Rate",
+Flag="gun_infinite_firerate",
+Icon="zap",
+Type="Checkbox",
+Default=true,
+Callback=function(a4)
+aX.fire_rate=a4 and math.huge or 0.1
+
+if aX.Enabled then
+ModAllGunsInBackpack()
+ModEquippedGun()
+end
+end
+}
+
+
+aW:Toggle{
+Title="MIN Reload Time",
+Flag="gun_min_reload",
+Icon="check",
+Type="Checkbox",
+Default=true,
+Callback=function(a4)
+aX.reload_time=a4 and 0 or 2
+
+if aX.Enabled then
+ModAllGunsInBackpack()
+ModEquippedGun()
+end
+end
+}
+
+
+aW:Toggle{
+Title="Automatic Mode",
+Flag="gun_automatic",
+Icon="check",
+Type="Checkbox",
+Default=true,
+Callback=function(a4)
+aX.automatic=a4
+
+if aX.Enabled then
+ModAllGunsInBackpack()
+ModEquippedGun()
+end
+end
+}
+
+aW:Divider()
+
+local a4=
+P:Tab
+{
+Title="Car",
+Icon="car"
+}
+
+
+
+local function BumpAuraLoop()
+while _G.BumpAura do
+task.wait(0.1)
+
+local a5=B.get_car_player_is_in()
+if not a5 then
+continue
+end
+
+for a7,a8 in am.get_all()do
+if a8~=F then
+local a9=a8:FindFirstChild"HumanoidRootPart"
+if a9 and GetDistanceFromRootPart(a9)<100 then
+
+
+local ba=a5.DriverSeat.AssemblyLinearVelocity
++Vector3.new(65,65,65)
+
+z.send("run_over",a5,a8,ba)
+end
+end
+end
+end
+end
+
+
+a4:Toggle{
+Title="Bump Aura",
+Flag="BumpAura",
+Value=false,
+Callback=function(a5)
+_G.BumpAura=a5
+
+if a5 then
+task.spawn(BumpAuraLoop)
+end
+end
+}
+
+local a5={}
+local a7=game:GetService"RunService"
+local a8=workspace.CurrentCamera
+local a9=game:GetService"ReplicatedStorage"
+local ba=game:GetService"Players"
+local bb=ba.LocalPlayer
+local bc=bb:WaitForChild"PlayerGui"
+
+
+local bd=true
+
+
+local be=Instance.new"ScreenGui"
+be.Name="DropItemViewerGui"
+be.ResetOnSpawn=false
+be.IgnoreGuiInset=true
+be.Parent=bc
+
+
+local function getItemImageId(bf)
+if bf=="Money"then
+local bg,bh=pcall(function()
+return bb.PlayerGui.TopRightHud.Holder.Frame.Frame.MoneyViewport.MoneyModel
+end)
+if bg and bh then
+return bh
+end
+end
+
+local bg=a9:FindFirstChild"Items"
+if not bg then return nil end
+
+for bh,bi in ipairs(bg:GetChildren())do
+if bi:IsA"Folder"then
+local bj=bi:FindFirstChild(bf)
+if bj then
+for bk,bl in ipairs{"ImageId","Image","Icon","TextureId","Texture"}do
+local bm=bj:GetAttribute(bl)
+if bm then return bm end
+end
+end
+end
+end
+return nil
+end
+
+local function formatImageId(bf)
+if not bf or bf==""then return nil end
+return bf
+end
+
+a7.RenderStepped:Connect(function()
+if not bd then return end
+
+local bf=workspace:FindFirstChild"DroppedItems"
+if not bf then return end
+
+
+for bg,bh in pairs(a5)do
+if not bg or not bg.Parent then
+if bh.shadowFrame then bh.shadowFrame:Destroy()end
+if bh.imageFrame then bh.imageFrame:Destroy()end
+if bh.name then bh.name:Destroy()end
+if bh.nameShadow then bh.nameShadow:Destroy()end
+if bh.nameShadow2 then bh.nameShadow2:Destroy()end
+if bh.dist then bh.dist:Destroy()end
+if bh.distShadow then bh.distShadow:Destroy()end
+a5[bg]=nil
+end
+end
+
+
+local bg={}
+for bh,bi in ipairs(bf:GetChildren())do
+if bi:IsA"Model"and bi:FindFirstChild"PickUpZone"and not bi:GetAttribute"Locked"then
+local bj=(a8.CFrame.Position-bi.PickUpZone.Position).Magnitude
+table.insert(bg,{item=bi,dist=bj})
+end
+end
+
+table.sort(bg,function(bh,bi)
+return bh.dist<bi.dist
+end)
+
+local bh=60
+
+for bi=1,math.min(20,#bg)do
+local bj=bg[bi].item
+local bk=a5[bj]
+
+if not bk then
+bk={
+nameShadow2=Drawing.new"Text",
+nameShadow=Drawing.new"Text",
+name=Drawing.new"Text",
+distShadow=Drawing.new"Text",
+dist=Drawing.new"Text"
+}
+
+
+local bl=Instance.new"Frame"
+bl.BackgroundColor3=Color3.fromRGB(0,0,0)
+bl.BackgroundTransparency=0.5
+bl.Size=UDim2.new(0,bh+8,0,bh+8)
+bl.AnchorPoint=Vector2.new(0.5,0.5)
+bl.BorderSizePixel=0
+bl.Parent=be
+Instance.new("UICorner",bl).CornerRadius=UDim.new(0,10)
+bk.shadowFrame=bl
+
+
+local bm=Instance.new"ImageLabel"
+bm.BackgroundTransparency=1
+bm.Size=UDim2.new(0,bh,0,bh)
+bm.AnchorPoint=Vector2.new(0.5,0.5)
+bm.ScaleType=Enum.ScaleType.Fit
+bm.Parent=be
+
+local bn=getItemImageId(bj.Name)
+
+if bj.Name=="Money"and typeof(bn)=="Instance"then
+bm:Destroy()
+local bo=Instance.new"ViewportFrame"
+bo.BackgroundTransparency=1
+bo.Size=UDim2.new(0,bh,0,bh)
+bo.AnchorPoint=Vector2.new(0.5,0.5)
+bo.Parent=be
+
+local bp=bn:Clone()
+bp.Parent=bo
+
+local bq=Instance.new"Camera"
+bq.Parent=bo
+bo.CurrentCamera=bq
+
+local br,bs=bp:GetBoundingBox()
+bq.CFrame=br*CFrame.new(0,0,bs.Z*1.5)
+bq.Focus=br
+
+bm=bo
+else
+local bo=formatImageId(bn)
+if bo then bm.Image=bo end
+end
+
+bk.imageFrame=bm
+
+
+for bo,bp in ipairs{
+bk.name,bk.nameShadow,bk.nameShadow2,
+bk.dist,bk.distShadow
+}do
+bp.Center=true
+bp.Font=2
+bp.Outline=false
+end
+
+
+bk.name.Size=16
+bk.name.Color=Color3.new(1,1,1)
+
+bk.nameShadow.Size=16
+bk.nameShadow.Color=Color3.fromRGB(120,200,255)
+bk.nameShadow.Transparency=0.4
+
+bk.nameShadow2.Size=16
+bk.nameShadow2.Color=Color3.fromRGB(60,150,255)
+bk.nameShadow2.Transparency=0.6
+
+
+bk.dist.Size=14
+bk.dist.Color=Color3.new(1,1,1)
+
+bk.distShadow.Size=14
+bk.distShadow.Color=Color3.new(0,0,0)
+bk.distShadow.Transparency=0.5
+
+a5[bj]=bk
+end
+
+local bl,bm=a8:WorldToViewportPoint(bj.PickUpZone.Position)
+if bm then
+local bn,bo=bl.X,bl.Y
+local bp=bh/2
+
+bk.shadowFrame.Position=UDim2.fromOffset(bn+3,bo+3)
+bk.imageFrame.Position=UDim2.fromOffset(bn,bo)
+
+local bq=bo-bp-25
+
+
+bk.nameShadow2.Text=bj.Name
+bk.nameShadow2.Position=Vector2.new(bn+3,bq+3)
+bk.nameShadow2.Visible=true
+
+
+bk.nameShadow.Text=bj.Name
+bk.nameShadow.Position=Vector2.new(bn+1.5,bq+1.5)
+bk.nameShadow.Visible=true
+
+
+bk.name.Text=bj.Name
+bk.name.Position=Vector2.new(bn,bq)
+bk.name.Visible=true
+
+local br=bj:FindFirstChild"AmountBillboardGui"
+local bs=br and br:FindFirstChild"TextLabel"
+local bt=bs and bs.Text or"?"
+
+local bu=bo+bp+10
+
+bk.distShadow.Text="[ "..bt.." ]"
+bk.distShadow.Position=Vector2.new(bn+2,bu+2)
+bk.distShadow.Visible=true
+
+bk.dist.Text="[ "..bt.." ]"
+bk.dist.Position=Vector2.new(bn,bu)
+bk.dist.Visible=true
+end
+end
+end)
+
+local bf=
+P:Tab
+{
+Title="Misc",
+Icon="circle-ellipsis"
+}
+
+
+local bg=false
+
+
+bf:Toggle{
+Title="Skip Animation",
+Flag="skip_anim",
+Value=false,
+Callback=function(bh)
+bg=bh
+
+
+if bg then
+task.spawn(function()
+while bg do
+
+for bi,bj in pairs(C.class.objects)do
+
+bj.states.open.set(true)
+C.skipping.set(true)
+end
+task.wait(0.05)
+end
+end)
+end
+end
+}
+
+
+
+
+
+local bh=game:GetService"Lighting"
+local bi=game:GetService"Players"local bj=
+bi.LocalPlayer
+local bk=workspace:FindFirstChildOfClass"Terrain"
+
+local function Bootsfps()
+
+for bl,bm in ipairs(bh:GetChildren())do
+if bm:IsA"Sky"
+or bm:IsA"Atmosphere"
+or bm:IsA"BloomEffect"
+or bm:IsA"SunRaysEffect"
+or bm:IsA"ColorCorrectionEffect"
+or bm:IsA"DepthOfFieldEffect"then
+bm:Destroy()
+end
+end
+
+
+bh.GlobalShadows=false
+bh.Brightness=0
+bh.FogEnd=9e9
+bh.EnvironmentDiffuseScale=0
+bh.EnvironmentSpecularScale=0
+
+
+if bk then
+bk.WaterWaveSize=0
+bk.WaterWaveSpeed=0
+bk.WaterReflectance=0
+bk.WaterTransparency=1
+end
+
+
+for bl,bm in ipairs(workspace:GetDescendants())do
+if bm:IsA"BasePart"then
+bm.Material=Enum.Material.Plastic
+bm.Reflectance=0
+bm.CastShadow=false
+bm.Color=Color3.fromRGB(120,120,120)
+
+elseif bm:IsA"Decal"or bm:IsA"Texture"then
+bm.Transparency=1
+
+elseif bm:IsA"ParticleEmitter"
+or bm:IsA"Trail"
+or bm:IsA"Beam"then
+bm.Enabled=false
+end
+end
+end
+
+
+
+
+
+bf:Button{
+Title="Bootsfps",
+Icon="zap",
+Callback=function()
+Bootsfps()
+end
+}
+
+
+
+
+
+local bl=game:GetService"Lighting"
+local bm=workspace:FindFirstChildOfClass"Terrain"
+
+local function RTX_ON()
+
+for bn,bo in ipairs(bl:GetChildren())do
+if bo:IsA"Atmosphere"
+or bo:IsA"BloomEffect"
+or bo:IsA"SunRaysEffect"
+or bo:IsA"ColorCorrectionEffect"
+or bo:IsA"DepthOfFieldEffect"
+or bo:IsA"Sky"then
+bo:Destroy()
+end
+end
+
+
+local bn=Instance.new"Sky"
+bn.SkyboxBk="rbxassetid://159454299"
+bn.SkyboxDn="rbxassetid://159454296"
+bn.SkyboxFt="rbxassetid://159454293"
+bn.SkyboxLf="rbxassetid://159454286"
+bn.SkyboxRt="rbxassetid://159454300"
+bn.SkyboxUp="rbxassetid://159454288"
+bn.SunAngularSize=21
+bn.Parent=bl
+
+
+bl.Technology=Enum.Technology.Future
+bl.GlobalShadows=true
+bl.ShadowSoftness=1
+bl.Brightness=3
+bl.ExposureCompensation=0.25
+bl.EnvironmentDiffuseScale=1
+bl.EnvironmentSpecularScale=1
+bl.ClockTime=14
+
+
+local bo=Instance.new"Atmosphere"
+bo.Density=0.35
+bo.Offset=0.25
+bo.Color=Color3.fromRGB(190,210,255)
+bo.Decay=Color3.fromRGB(120,150,200)
+bo.Glare=0.35
+bo.Haze=1.2
+bo.Parent=bl
+
+
+local bp=Instance.new"BloomEffect"
+bp.Intensity=1.2
+bp.Size=56
+bp.Threshold=0.85
+bp.Parent=bl
+
+
+local bq=Instance.new"SunRaysEffect"
+bq.Intensity=0.25
+bq.Spread=0.85
+bq.Parent=bl
+
+
+local br=Instance.new"ColorCorrectionEffect"
+br.Brightness=0.05
+br.Contrast=0.25
+br.Saturation=0.35
+br.TintColor=Color3.fromRGB(255,245,235)
+br.Parent=bl
+
+
+local bs=Instance.new"DepthOfFieldEffect"
+bs.FarIntensity=0.25
+bs.NearIntensity=0.05
+bs.FocusDistance=60
+bs.InFocusRadius=40
+bs.Parent=bl
+
+
+if bm then
+bm.WaterWaveSize=1
+bm.WaterWaveSpeed=15
+bm.WaterReflectance=1
+bm.WaterTransparency=0.05
+end
+
+
+for bt,bu in ipairs(workspace:GetDescendants())do
+if bu:IsA"BasePart"then
+bu.CastShadow=true
+if bu.Material==Enum.Material.Plastic then
+bu.Material=Enum.Material.SmoothPlastic
+end
+end
+end
+end
+
+
+
+
+
+bf:Button{
+Title="RTX ON",
+Icon="sparkles",
+Callback=function()
+RTX_ON()
+end
+}
+
+
+
+
+local bn=
+P:Tab
+{
+Title="Server",
+Icon="server"
+}
+
+
+bn:Section
+{
+Title="Server Information:"
+}
+
+
+
+local function GetJobID()
+return game.JobId or"Unknown"
+end
+
+
+
+bn:Code
+{
+Title="Current Server",
+Code=" "..GetJobID()
+}
+
+
+bn:Divider()
+
+bn:Section
+{
+Title="Server Utilities:"
+}
+
+
+
+local bo=""
+
+bn:Input
+{
+Title="Enter Server Code",
+Placeholder="Paste server JobId here...",
+Callback=function(bp)
+bo=bp
+end
+}
+
+
+
+bn:Button
+{
+Title="Join by Code",
+Icon="log-in",
+Callback=function()
+if bo==""then
+warn"ใส่codeดิน้อง"
+return
+end
+local bp=game:GetService"TeleportService"
+bp:TeleportToPlaceInstance(game.PlaceId,bo,game.Players.LocalPlayer)
+end
+}
+
+
+bn:Button
+{
+Title="Rejoin Current Server",
+Icon="refresh-ccw",
+Callback=function()
+local bp=game:GetService"TeleportService"
+bp:TeleportToPlaceInstance(game.PlaceId,game.JobId,game.Players.LocalPlayer)
+end
+}
+
+
+bn:Button
+{
+Title="Hop Server (Lowest Player)",
+Icon="shuffle",
+Callback=function()
+local bp=game:GetService"HttpService"
+local bq=game:GetService"TeleportService"
+local br={}
+local bs=
+game:HttpGet(
+string.format(
+"https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Asc&limit=100",
+game.PlaceId
+)
+)
+local bt=bp:JSONDecode(bs)
+if bt and bt.data then
+for bu,bv in pairs(bt.data)do
+if bv.playing<bv.maxPlayers then
+table.insert(br,bv.id)
+end
+end
+end
+if#br>0 then
+bq:TeleportToPlaceInstance(
+game.PlaceId,
+br[math.random(1,#br)],
+game.Players.LocalPlayer
+)
+end
+end
+}
+
+
+local bp=
+P:Tab
+{
+Title="Config",
+Icon="settings"
+}
+
+
+bp:Section
+{
+Title="Config Manager:"
+}
+
+
+local bq=P.ConfigManager
+local br=""
+
+
+bp:Input
+{
+Title="Config Name",
+Placeholder="Enter config name...",
+Callback=function(bs)
+br=bs
+end
+}
+
+
+
+bp:Button
+{
+Title="Save Config",
+Icon="save",
+Callback=function()
+if br~=""then
+local bs=bq:CreateConfig(br)
+bs:Save()
+O:Notify
+{
+Title="Config Manager",
+Content="Saved: "..br,
+Duration=2
+}
+
+else
+O:Notify
+{
+Title="Config Manager",
+Content="Please enter config name!",
+Duration=2
+}
+
+end
+end
+}
+
+
+
+bp:Button
+{
+Title="Load Config",
+Icon="folder-open",
+Callback=function()
+if br~=""then
+local bs=bq:CreateConfig(br)
+bs:Load()
+O:Notify
+{
+Title="Config Manager",
+Content="Loaded: "..br,
+Duration=2
+}
+
+else
+O:Notify
+{
+Title="Config Manager",
+Content="Please enter config name!",
+Duration=2
+}
+
+end
+end
+}
+
+
+
+bp:Button
+{
+Title="Delete Config",
+Icon="trash-2",
+Callback=function()
+if br~=""then
+local bs=bq:CreateConfig(br)
+bs:Delete()
+O:Notify
+{
+Title="Config Manager",
+Content="Deleted: "..br,
+Duration=2
+}
+
+else
+O:Notify
+{
+Title="Config Manager",
+Content="Please enter config name!",
+Duration=2
+}
+
+end
+end
+}
+
+
+task.wait(0.1)
+local bs=game:GetService"ReplicatedStorage"
+
+pcall(function()
+local bt=require(bs.Modules.Game.UI.BuyPromptUI)
+
+if bt.loaded then
+local bu=bt.loaded
+
+bt.loaded=function(...)
+
+local bv=bu(...)
+
+
+task.spawn(function()
+task.wait(0.5)
+
+local bw=require(bs.Modules.Core.Util)
+local bx=require(bs.Modules.Core.UI)
+local by=bx.get"SellPromptSellButton"
+
+if by and bw.tween then
+
+
+local bz=bw.tween
+bw.tween=function(bA,bB,bC,...)
+
+if bA:IsA"NumberValue"and bC.Value==1 then
+
+if bB.Time>0 then
+bB=TweenInfo.new(
+0,
+bB.EasingStyle,
+bB.EasingDirection,
+bB.RepeatCount,
+bB.Reverses,
+bB.DelayTime
+)
+end
+end
+
+return bz(bA,bB,bC,...)
+end
+
+end
+end)
+
+return bv
+end
+
+end
+end)
+
+
+pcallfunction()
+local bt=require(bs.Modules.Core.Util)
+
+if bt.tween then
+local bu=bt.tween
+
+bt.tween=function(bv,bw,bx,...)
+
+if bv:IsA"NumberValue"and bx.Value==1 then
+
+if bw.Time>0.1 then
+bw=TweenInfo.new(
+0.1,
+bw.EasingStyle,
+bw.EasingDirection,
+bw.RepeatCount,
+bw.Reverses,
+bw.DelayTime
+)
+end
+end
+
+return bu(bv,bw,bx,...)
+end
+
+end
